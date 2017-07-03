@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  div#content
+    input#input(type='text' style='width: 300px;' value='#{search}' placeholder='WHERE YOU AT?')
+    input#go(type='submit' style='width: 80px;' value='GO')
+    br
+    br
+    table
+      for item in items
+        tr
+          td
+            img(src='#{photoUrl}'+'#{item.photos[0].photo_reference}')
+          td
+            input.going(type='submit' name='#{item.id}' value='GOING 0')
+            p= item.name
+            p= item.formatted_address
+
+
+  script.
+    var authed = '#{isAuthed}' == 'true'
+    $(function () {
+        $('#go').on('click', function () {
+            window.location.href = '/?search='+$('#input').val()
+        })
+      $('.going').on('click', function () {
+          console.log(authed)
+          if (!authed){
+              window.location.href = '/request-token'
+          }else{
+              console.log('/add-going/'+$('.going').attr('name'))
+              window.location.href = '/add-going/'+$('.going').attr('name')
+          }
+      })
+    })
+
