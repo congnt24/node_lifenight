@@ -4,7 +4,7 @@
 var twitter = {
     consumerKey: '9d1pMJZ6yxC0J43FTFjTOTLQb',
     consumerSecret: 'vQSBGrTEjLlthorw2DsUORQR752hAJN0sWKOiGMvjPVmMcbv64',
-    callbackUrl: 'http://localhost:3000/access-token'
+    callbackUrl: 'https://congntlifenight.herokuapp.com/access-token'
 }
 
 var googlePlaceKey = 'AIzaSyDZ3Lf6HqFloLrOXrTaY-KmBzYTgBWb5Pk'
