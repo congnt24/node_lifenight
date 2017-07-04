@@ -10,7 +10,8 @@ var mongodb = require('mongodb').MongoClient
 var repo = {}
 
 repo.count = (placeid) => {
-    return db.get().then((db) => db.collection('place').find({PLACE_ID: placeid}).count()).then((doc) => {
+    return db.get().then((db) => db.collection('place')
+        .find({PLACE_ID: placeid, DATE: {$lt: new Date(), $gt: (new Date()).minDate()}}).count()).then((doc) => {
 
         return doc
     }, (err) => {
