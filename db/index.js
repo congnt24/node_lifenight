@@ -4,23 +4,40 @@
 
 "use strict";
 var mongodb = require('mongodb').MongoClient
+var config = require('../configs/config')
+
 
 var state = {
     db: null
 }
 
-exports.connect = (url, done) => {
-    if(state.db) return done()
-    state.db = mongodb.connect(url, (err, db) => {
-        if (err) return done(err)
-        state.db = db
-        done()
-    })
-}
-
+// exports.connect = (url, done) => {
+//     if (state.db) return done()
+//     state.db = mongodb.connect(url, (err, db) => {
+//         if (err) return done(err)
+//         state.db = db
+//         done()
+//     })
+// }
+//
 
 exports.get = () => {
-    return state.db
+    if (state.db) {
+        return new Promise((resolve, reject) => {
+            resolve(state.db)
+        })
+    }
+    return new Promise((resolve, reject) => {
+        mongodb.connect(config.mongo.url, (err, db) => {
+            if (err) {
+                reject(err)
+            } else {
+                console.log('DB connection successful');
+                state.db = db
+                resolve(db)
+            }
+        })
+    })
 }
 
 exports.close = done => {

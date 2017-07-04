@@ -12,7 +12,12 @@ block content
           td
             img(src='#{photoUrl}'+'#{item.photos[0].photo_reference}')
           td
-            input.going(type='submit' name='#{item.id}' value='GOING 0')
+            if isAuthed
+                a(href='/add-going/#{item.id}')
+                    input.going(type='submit' value='GOING #{item.COUNT}')
+            else
+                a(href='/request-token')
+                    input.going(type='submit' value='GOING #{item.COUNT}')
             p= item.name
             p= item.formatted_address
 
@@ -23,7 +28,7 @@ block content
         $('#go').on('click', function () {
             window.location.href = '/?search='+$('#input').val()
         })
-      $('.going').on('click', function () {
+      $('.goinsg').on('click', function () {
           console.log(authed)
           if (!authed){
               window.location.href = '/request-token'

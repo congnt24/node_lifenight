@@ -1,6 +1,7 @@
 /**
  * Created by apple on 6/30/17.
  */
+"use strict";
 var config = require('../configs/config')
 var db = require('../db')
 const collection = 'user'
@@ -23,22 +24,35 @@ var user = {
 
 var repository = {}
 
-repository.find = function (email, callback) {
-    db.get().collection(collection).findOne({EMAIL: email}, (error, docs) => {
-        callback(error, docs)
-    })
+repository.find = function (email) {
+    return db.get().then(db => db.collection(collection).findOne({EMAIL: email}))
 }
 
 repository.create = function (email, password, firstName, lastName, displayName, callback) {
-    var userCol = db.get().collection(collection)
-    user['EMAIL'] = email
-    user['PASSWORD'] = password
-    user['FIRST_NAME'] = firstName
-    user['LAST_NAME'] = lastName
-    user['DISPLAY_NAME'] = displayName
-    user['STATE'] = 1
-    userCol.insertOne(user, [{json: true}], (err, docs) => {
-        callback(err, docs)
+    return repository.find(email).then(doc=>{
+        if (doc == null) {
+            user['EMAIL'] = email
+            user['PASSWORD'] = password
+            user['FIRST_NAME'] = firstName
+            user['LAST_NAME'] = lastName
+            user['DISPLAY_NAME'] = displayName
+            user['STATE'] = 1
+            return db.get().then(db => db.insertOne(user, [{json: true}]))
+                .then(doc =>{
+                    console.log(doc)
+                    return doc
+                })
+                .catch(err => {console.error(err)})
+        }else{
+            return new Promise((resolve, reject) => {
+                resolve(doc)
+            })
+        }
+    }).catch(err => {
+        console.error(err)
+        return new Promise((resolve, reject) => {
+            reject(err)
+        })
     })
 }
 

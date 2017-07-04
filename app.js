@@ -54,14 +54,14 @@ app.use(function(req, res, next) {
 });
 
 //initialize db
-db.connect(config.mongo.url, err => {
-    if (err) {
-        console.error('Unable to connect to mongo DB')
-        process.exit(1)
-    }else{
-        console.log('DB connection successful');
-    }
-})
+// db.connect(config.mongo.url, err => {
+//     if (err) {
+//         console.error('Unable to connect to mongo DB')
+//         process.exit(1)
+//     }else{
+//         console.log('DB connection successful');
+//     }
+// })
 
 // error handler
 app.use(function(err, req, res, next) {

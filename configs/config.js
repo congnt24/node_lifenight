@@ -7,7 +7,7 @@ var twitter = {
     callbackUrl: 'http://localhost:3000/access-token'
 }
 
-var googlePlaceKey = 'AIzaSyBu4nSwHTsmLNX-O8s3zTZjraqHu81IB9g'
+var googlePlaceKey = 'AIzaSyDZ3Lf6HqFloLrOXrTaY-KmBzYTgBWb5Pk'
 var googlePlace = {
     url: 'https://maps.googleapis.com/maps/api/place/textsearch/json?&key='+googlePlaceKey+'&query=restaurants in ',
     photoUrl: 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=150&key='+googlePlaceKey+'&photoreference='
